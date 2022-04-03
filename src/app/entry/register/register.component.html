@@ -1,0 +1,9 @@
+<form (submit)="sendTestData()" [formGroup]="userForm">
+  <label for="username">Username</label><br>
+  <input type="text" id="username" name="username" formControlName="name"><br>
+  <label for="password">Password</label><br>
+  <input type="password" id="password" name="password" placeholder="***" formControlName="password"><br>
+  <label for="email">Email</label><br>
+  <input type="email" id="email" name="email" placeholder="@" formControlName="email"><br>
+  <input type="submit" [disabled]="!userForm.valid">
+</form>
