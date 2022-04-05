@@ -14,13 +14,14 @@ export class SigninComponent implements OnInit {
   }
 
    userForm = new FormGroup({
-    password: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required)
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    email: new FormControl('', [Validators.required, Validators.email])
   })
 
   ngOnInit(): void {
-    this.userForm.valueChanges.subscribe(console.log)
+    this.userForm.valueChanges.subscribe()
   }
+
 
   sendTestData(){
     const item: IUser = {
@@ -30,4 +31,5 @@ export class SigninComponent implements OnInit {
     this.userService.signin(item)
     return 0
   }
+
 }
