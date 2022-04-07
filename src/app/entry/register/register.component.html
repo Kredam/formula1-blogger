@@ -1,9 +1,21 @@
 <form (submit)="sendTestData()" [formGroup]="userForm">
-  <label for="username">Username</label><br>
-  <input type="text" id="username" name="username" formControlName="name"><br>
-  <label for="password">Password</label><br>
-  <input type="password" id="password" name="password" placeholder="***" formControlName="password"><br>
-  <label for="email">Email</label><br>
-  <input type="email" id="email" name="email" placeholder="@" formControlName="email"><br>
-  <input type="submit" [disabled]="!userForm.valid">
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput type="text" id="name" name="name" formControlName="name"><br>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput type="email" id="email" name="email" placeholder="Ex. examp@gmail.com" formControlName="email"><br>
+    <mat-error *ngIf="!userForm.get('email')?.hasError('required') && userForm.get('email')?.hasError('email')">
+      Bad email format
+    </mat-error>
+  </mat-form-field><br>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" id="password" name="password" placeholder="***" formControlName="password"><br>
+    <mat-error *ngIf="!userForm.get('password')?.hasError('required') && userForm.get('password')?.hasError('minlength')">
+      Please expand your password with more {{ 8 - this.userForm.get('password')?.value.length}} characters
+    </mat-error>
+  </mat-form-field><br>
+  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Primary</button>
 </form>

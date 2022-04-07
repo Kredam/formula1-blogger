@@ -1,23 +1,22 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'formula1-blogger';
 
-  test = new FormGroup({
-    name: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required)
-  })
+  constructor(public userService : UserService) {}
 
   ngOnInit(): void {
-    this.test.valueChanges.subscribe(console.log)
+
   }
 
-  sendTestData(){
-    return 0
+  logout() {
+   this.userService.signout()
   }
+
 }

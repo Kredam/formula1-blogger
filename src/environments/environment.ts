@@ -4,13 +4,13 @@
 
 export const environment = {
   firebase: {
-    projectId: 'formula1-blogger',
-    appId: '1:975792113247:web:d1755665bc173a5779fdea',
-    storageBucket: 'formula1-blogger.appspot.com',
-    apiKey: 'AIzaSyC6DceSLGeCTtQlflxUPa7XovsrPuT1cX4',
-    authDomain: 'formula1-blogger.firebaseapp.com',
-    messagingSenderId: '975792113247',
-    measurementId: 'G-JE3LRC0SNT',
+    projectId: 'webkert-formula1-blog',
+    appId: '1:980617768394:web:516c6b517a6b1166b17333',
+    storageBucket: 'webkert-formula1-blog.appspot.com',
+    locationId: 'europe-west',
+    apiKey: 'AIzaSyAwM6LnVAnPsdcdFTo1gbzfO4aoThKFL3Y',
+    authDomain: 'webkert-formula1-blog.firebaseapp.com',
+    messagingSenderId: '980617768394',
   },
   production: false
 };

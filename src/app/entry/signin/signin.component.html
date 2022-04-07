@@ -13,5 +13,5 @@
       Please expand your password with more {{ 8 - this.userForm.get('password')?.value.length}} characters
     </mat-error>
   </mat-form-field><br>
-  <input type="submit" [disabled]="!userForm.valid">
+  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Primary</button>
 </form>
