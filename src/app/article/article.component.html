@@ -1,0 +1,36 @@
+  <mat-checkbox [checked]="isCreatedFormVisible"
+                class="button-alignment"
+                (change)="setCreationFormVisible($event.checked)"
+>Create New Article</mat-checkbox>
+<mat-grid-list [cols]="columnNumber"  >
+  <mat-grid-tile *ngIf="isCreatedFormVisible">
+    <form [formGroup]="articleForm" (submit)="submitArticle()" class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name="name" id="name" formControlName="name" class="name">
+      </mat-form-field><br>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput type="text" name="description" id="description" formControlName="description" class="description">
+      </mat-form-field><br>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>content</mat-label>
+        <textarea matInput type="text" name="content" id="content" formControlName="content" class="content"></textarea>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!articleForm.valid">Post</button>
+      <button type="button" mat-raised-button color="warn" (click)="enableForm()">Clear</button>
+    </form>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card *ngFor="let article of articles | async" class="cards"><br>
+      <div class="icons">
+        <mat-icon [id]="article.name" class="icon-delete" (click)="deleteArticle($event.target!)">delete</mat-icon>
+        <mat-icon [id]="article.name" class="icon-edit" (click)="editArticle($event.target!)">edit</mat-icon>
+      </div>
+      <mat-card-title>{{article.name}}</mat-card-title>
+      <mat-card-subtitle>{{ article.description }}</mat-card-subtitle>
+      <mat-card-content>{{ article.content }}</mat-card-content>
+      <mat-card-footer>Written by: {{this.userService.user.getValue().displayName}}</mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
