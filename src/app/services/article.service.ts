@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData } from "@angular/fire/firestore";
 import { UserService } from './user.service';
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import { IArticle } from "../models/article";
 import { AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from '@angular/router';
+import {IComment} from "../models/comment";
+import {IUser} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +44,16 @@ export class ArticleService {
     })
   }
 
-  editSelectedArticle(elementId: IArticle) {
+  postComment(comment : IComment, docName: string){
+    this._store.collection('Articles').doc(docName).collection('Comments').add(comment)
+  }
+
+  retrieveComments(articleName : string) : Observable<IComment[]> {
+    return this._store.collection("Articles").doc(articleName).collection<IComment>("Comments").valueChanges()
+
+  }
+  retrieveAllArticles() : Observable<IArticle[]>{
+      return this._store.collection<IArticle>('Articles').valueChanges()
 
   }
 }
