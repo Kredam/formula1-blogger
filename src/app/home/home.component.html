@@ -1,5 +1,24 @@
-<mat-grid-list cols="3" rowHeight="3e:1">
-  <mat-grid-tile>Home</mat-grid-tile>
-  <mat-grid-tile>is</mat-grid-tile>
-  <mat-grid-tile>working</mat-grid-tile>
+<mat-grid-list cols="2" *ngFor="let article of  articles| async">
+  <mat-grid-tile class="example-full-width">
+    <mat-card  class="cards">
+      <mat-card-title>{{article.name}}</mat-card-title>
+      <mat-card-subtitle>{{article.description}}</mat-card-subtitle>
+      <mat-card-content>{{article.content}}</mat-card-content>
+      <mat-card-footer>Written by: {{this.userService.user.getValue().displayName}}</mat-card-footer>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div *ngIf="selectedArticle == article.name">
+      <mat-card *ngFor="let comment of  comments| async">
+  <!--      <mat-card-header>{{this.userService.getUserDataById(comment.uid).getValue().displayName}}</mat-card-header>-->
+        <mat-card-content>{{comment.content}}</mat-card-content>
+      </mat-card>
+    </div>
+    <mat-form-field [formGroup]="comment">
+      <mat-label>Comment</mat-label>
+      <input matInput formControlName="content"><br>
+    </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" id={{article.name}} [disabled]="!this.comment.valid" name="comment" (click)="obtainArticleName($event.currentTarget!)">Post</button>
+      <button mat-raised-button color="accent" type="button" id={{article.name}} (click)="showComments($event.currentTarget!)">Show Comments</button>
+  </mat-grid-tile>
 </mat-grid-list>
