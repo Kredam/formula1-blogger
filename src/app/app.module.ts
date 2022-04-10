@@ -22,7 +22,12 @@ import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
-import { ProfileComponent } from './profile/profile.component';
+import { ArticleComponent } from './article/article.component';
+import { CommentComponent } from './article/comment/comment/comment.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCardModule} from "@angular/material/card";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -31,26 +36,31 @@ import { ProfileComponent } from './profile/profile.component';
     SigninComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent,
+    ArticleComponent,
+    CommentComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatGridListModule,
-    AppRoutingModule,
-    FormsModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    AngularFirestoreModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),
-    MatInputModule,
-    MatIconModule,
-  ],
+    imports: [
+        BrowserModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatGridListModule,
+        AppRoutingModule,
+        FormsModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        AngularFirestoreModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth()),
+        MatInputModule,
+        MatIconModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatListModule,
+    ],
   providers: [
     ScreenTrackingService,UserTrackingService
   ],
