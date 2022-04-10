@@ -4,10 +4,11 @@ import {HomeComponent} from "./home/home.component";
 import {EntryComponent} from "./entry/entry.component";
 import {AuthGuard} from "./guards/auth.guard";
 import { ArticleComponent } from './article/article.component';
+import {SignGuard} from "./guards/sign.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'articles', component: ArticleComponent},
+  {path: 'articles', component: ArticleComponent, canActivate:[SignGuard]},
   {path: 'entry', component: EntryComponent, canActivate:[AuthGuard]},
   {path: '**', redirectTo: ''}
 ];
