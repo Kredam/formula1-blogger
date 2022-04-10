@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData } from "@angular/fire/firestore";
-import { BehaviorSubject} from "rxjs";
+import { BehaviorSubject, Observable} from "rxjs";
 import { IUser } from "../models/user";
 import { updateProfile} from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
@@ -11,18 +11,24 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService {
-  user: BehaviorSubject<IUser> = new BehaviorSubject<IUser>({
-    displayName: "",
-    password: "",
-    email: "",
-    emailVerified: undefined
-  })
+  user: BehaviorSubject<IUser>
 
-  private readonly collection: AngularFirestoreCollection<IUser>;
+  private readonly userCollection: AngularFirestoreCollection<IUser>;
 
   constructor(private _store: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
-    this.collection = this._store.collection<IUser>('Users')
+    this.userCollection = this._store.collection<IUser>('Users')
+
+    this.user = new BehaviorSubject<IUser>({
+      displayName: "",
+      password: "",
+      email: "",
+      emailVerified: undefined
+    })
     this.signin()
+  }
+
+  get userColl(){
+    return this.userCollection
   }
 
   register(userdata: IUser) {
@@ -31,9 +37,15 @@ export class UserService {
         displayName: userdata.displayName,
         photoURL: ''
       })
+      this.userCollection.doc(UserCred.user?.uid).set({
+        uid: UserCred.user?.uid,
+        displayName: userdata.displayName,
+        email: UserCred.user?.email!,
+        emailVerified: UserCred.user?.emailVerified
+      })
     })
   }
-  
+
   signin(userData?: IUser) {
     if(!localStorage.getItem("uid")){
       this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!)
@@ -47,11 +59,9 @@ export class UserService {
           email: user?.email!,
           emailVerified: user?.emailVerified
         }
-        console.log(user)
         localStorage.setItem("uid", user.uid)
         this.user.next(userSubj)
       }else{
-        localStorage.clear()
         this.user.next({
           uid: '',
           displayName: '',
@@ -59,10 +69,16 @@ export class UserService {
           emailVerified: undefined
         })
       }
-    }) 
+    })
   }
 
+  // getUserDataById(uid:any) : BehaviorSubject<IUser>{
+  //   return new BehaviorSubject<IUser>(this.userCollection.doc<IUser>(uid).valueChanges())
+  // }
+
   signout(){
+    localStorage.clear()
     this.auth.signOut()
+    this.router.navigate(['entry'])
   }
 }
