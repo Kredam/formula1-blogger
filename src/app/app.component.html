@@ -1,20 +1,19 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"  routerLink="/" routerLinkActive="active">
-    <mat-icon>home</mat-icon>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" matTooltip="Home" routerLink="/" routerLinkActive="active">
+    <img width="100px" src="./assets/formula1.png" />
   </button>
-  <span>Formula 1 Blogger</span>
   <span class="example-spacer"></span>
-  <span>{{this.userService.user.getValue().displayName}}</span>
-  <mat-icon mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/profile" routerLinkActive="active">account_circle</mat-icon>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/articles" routerLinkActive="active">
+  <button mat-icon-button (click)="openBottomProfileSheet()" class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/profile" routerLinkActive="active" matTooltip="Profile Detail">
+    <mat-icon >account_circle</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" matTooltip="My Articles" routerLink="/articles" routerLinkActive="active">
     <mat-icon>article</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" *ngIf="this.userService.user.getValue().uid !== ''" (click)="logout()">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" matTooltip="Logout" *ngIf="this.userService.user.getValue().uid !== ''" (click)="logout()">
     <mat-icon>logout</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" *ngIf="this.userService.user.getValue().uid === ''" routerLink="/entry" routerLinkActive="active">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" matTooltip="Login" *ngIf="this.userService.user.getValue().uid === ''" routerLink="/entry" routerLinkActive="active">
     <mat-icon>login</mat-icon>
   </button>
 </mat-toolbar>
-
 <router-outlet></router-outlet>

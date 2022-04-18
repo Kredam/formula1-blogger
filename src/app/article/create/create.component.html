@@ -1,0 +1,31 @@
+  <mat-checkbox [checked]="isCreatedFormVisible"
+                class="button-alignment"
+                (change)="setCreationFormVisible($event.checked)"
+>Create New Article</mat-checkbox>
+<div fxLayout.gt-md="row" fxLayout="column" fxLayoutAlign.gt-md="center" fxLayoutAlign="center" >
+  <div fxFlex.gt-md="50" fxFlex="100" fxLayout.gt-md="column" *ngIf="isCreatedFormVisible" class="example-form-div">
+    <form [formGroup]="articleForm" (submit)="submitArticle()" >
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name="name" id="name" formControlName="name" class="name">
+      </mat-form-field><br>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Image Url</mat-label>
+        <input matInput type="text" name="img_url" id="img_url" formControlName="img_url" class="img_url">
+      </mat-form-field><br>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Description</mat-label>
+        <input matInput type="text" name="description" id="description" formControlName="description" class="description">
+      </mat-form-field><br>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>content</mat-label>
+        <textarea matInput type="text" name="content" id="content" formControlName="content" class="content"></textarea>
+      </mat-form-field>
+    <div>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!articleForm.valid">Post</button>
+      <button type="button" mat-raised-button color="warn" (click)="enableForm()">Clear</button>
+    </div>
+    </form>
+  </div>
+    <app-article [userOnly]="true" [deleteArticle]="deleteArticle" (editArticleEvent)="editArticle($event)"></app-article>
+</div>

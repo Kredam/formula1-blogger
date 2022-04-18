@@ -23,11 +23,16 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import { ArticleComponent } from './article/article.component';
-import { CommentComponent } from './article/comment/comment/comment.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatCardModule} from "@angular/material/card";
 import {MatListModule} from "@angular/material/list";
+import {FlexLayoutModule, FlexModule} from "@angular/flex-layout";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {ProfileSheetComponent} from "./profile/profile.component";
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet'
+import {CreateComponent} from "./article/create/create.component";
+import { CommentsComponent } from './article/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -37,30 +42,37 @@ import {MatListModule} from "@angular/material/list";
     RegisterComponent,
     HomeComponent,
     ArticleComponent,
-    CommentComponent,
+    CreateComponent,
+    ProfileSheetComponent,
+    CommentsComponent
   ],
-    imports: [
-        BrowserModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        MatGridListModule,
-        AppRoutingModule,
-        FormsModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        AngularFirestoreModule,
-        ReactiveFormsModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideFirestore(() => getFirestore()),
-        provideAuth(() => getAuth()),
-        MatInputModule,
-        MatIconModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        MatCardModule,
-        MatListModule,
-    ],
+  imports: [
+    BrowserModule,
+    MatBottomSheetModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatGridListModule,
+    AppRoutingModule,
+    FormsModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    AngularFirestoreModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
+    MatInputModule,
+    MatIconModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatListModule,
+    FlexModule,
+    FlexLayoutModule,
+    MatTooltipModule
+  ],
   providers: [
     ScreenTrackingService,UserTrackingService
   ],

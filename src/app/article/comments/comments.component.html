@@ -1,0 +1,11 @@
+<mat-form-field [formGroup]="comment">
+  <mat-label>Comment</mat-label>
+  <input matInput formControlName="content"><br>
+</mat-form-field>
+<button mat-raised-button color="primary" type="submit" [id]="currentArticle" [disabled]="!this.comment.valid" name="comment" (click)="obtainArticleName($event.currentTarget!)">Post</button>
+<button mat-raised-button color="accent" type="button" [id]="currentArticle" (click)="showComments($event.currentTarget!)">Show Comments</button>
+<div *ngIf="selectedArticle == currentArticle">
+  <mat-card *ngFor="let comment of  comments| async">
+    <mat-card-content>{{comment.content}}</mat-card-content>
+  </mat-card>
+</div>

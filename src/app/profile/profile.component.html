@@ -1,0 +1,21 @@
+<mat-list>
+  <mat-list-item>
+    <span mat-line>Username:</span>
+    <span mat-line>{{this._userService.user.getValue().displayName}}</span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <span mat-line>E-mail:</span>
+    <span mat-line>{{this._userService.user.getValue().email}}</span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <span mat-line>Verified:</span>
+    <span mat-line>{{this._userService.user.getValue().emailVerified ? "Verified User" : "Unverified User"}}</span>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <span mat-line>User id:</span>
+    <span mat-line>{{this._userService.user.getValue().uid}}</span>
+  </mat-list-item>
+</mat-list>

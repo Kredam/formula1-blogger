@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from "@angular/fire/firestore";
 import { UserService } from './user.service';
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, Observable, take, pipe} from "rxjs";
 import { IArticle } from "../models/article";
-import { AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore} from "@angular/fire/compat/firestore";
 import { Router } from '@angular/router';
 import {IComment} from "../models/comment";
-import {IUser} from "../models/user";
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +18,14 @@ export class ArticleService {
 
   constructor(private _store: AngularFirestore, private userService: UserService, private router: Router) {
     this.article = new BehaviorSubject<IArticle>({
-      author: this.userService.user.getValue(),
+      uid: this.userService.user.getValue().uid,
       name: '',
       description: '',
       content: '',
     })
   }
 
-  retrieveArticles() : Observable<IArticle[]>{
+  retrieveUserArticles() : Observable<IArticle[]>{
    return this._store.collection<IArticle>("Articles", items => items.where('uid', '==', localStorage.getItem('uid'))).valueChanges()
   }
 
@@ -36,9 +34,11 @@ export class ArticleService {
   }
 
   postArticle(articleData : IArticle) : void {
+    console.log(articleData)
     this._store.collection('Articles').doc(articleData.name).set({
       name: articleData.name,
-      uid: articleData.author?.uid!,
+      uid: articleData.uid!,
+      img: articleData.img!,
       description: articleData.description,
       content: articleData.content
     })
@@ -54,6 +54,5 @@ export class ArticleService {
   }
   retrieveAllArticles() : Observable<IArticle[]>{
       return this._store.collection<IArticle>('Articles').valueChanges()
-
   }
 }

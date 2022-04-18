@@ -1,3 +1,5 @@
+<h1>Sign in</h1>
+<mat-divider id="entry-field"></mat-divider>
 <form (submit)="sendTestData()" [formGroup]="userForm">
   <mat-form-field>
     <mat-label>Email</mat-label>
@@ -13,5 +15,5 @@
       Please expand your password with more {{ 8 - this.userForm.get('password')?.value.length}} characters
     </mat-error>
   </mat-form-field><br>
-  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Primary</button>
+  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Sign in</button>
 </form>

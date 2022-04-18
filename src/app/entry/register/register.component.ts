@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.userForm.valueChanges.subscribe(console.log)
   }
 
   sendTestData(){

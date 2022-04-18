@@ -41,13 +41,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "10mb"
                 }
               ],
               "fileReplacements": [
@@ -112,8 +112,8 @@
             "prerender": false,
             "ssr": false,
             "browserTarget": "formula1-blogger:build:production",
-            "firebaseProject": "formula1-blogger",
-            "firebaseHostingSite": "formula1-blogger"
+            "firebaseProject": "formula1-school-project",
+            "firebaseHostingSite": "formula1-school-project"
           }
         }
       }

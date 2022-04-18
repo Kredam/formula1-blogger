@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from "@angular/fire/firestore";
+import {Firestore, collection, collectionData, limit} from "@angular/fire/firestore";
 import { BehaviorSubject, Observable} from "rxjs";
 import { IUser } from "../models/user";
 import { updateProfile} from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/compat/firestore";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from '@angular/router';
+import firebase from "firebase/compat";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class UserService {
   user: BehaviorSubject<IUser>
 
   private readonly userCollection: AngularFirestoreCollection<IUser>;
+
+  public  userRef: AngularFirestoreDocument<IUser> | undefined;
 
   constructor(private _store: AngularFirestore, private auth: AngularFireAuth, private router: Router) {
     this.userCollection = this._store.collection<IUser>('Users')
@@ -27,7 +30,7 @@ export class UserService {
     this.signin()
   }
 
-  get userColl(){
+  get getUserCollection(){
     return this.userCollection
   }
 
@@ -46,6 +49,7 @@ export class UserService {
     })
   }
 
+
   signin(userData?: IUser) {
     if(!localStorage.getItem("uid")){
       this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!)
@@ -60,7 +64,9 @@ export class UserService {
           emailVerified: user?.emailVerified
         }
         localStorage.setItem("uid", user.uid)
+        this.userRef = this.userCollection.doc(user.uid)
         this.user.next(userSubj)
+        this.router.navigate([''])
       }else{
         this.user.next({
           uid: '',
@@ -72,13 +78,14 @@ export class UserService {
     })
   }
 
-  // getUserDataById(uid:any) : BehaviorSubject<IUser>{
-  //   return new BehaviorSubject<IUser>(this.userCollection.doc<IUser>(uid).valueChanges())
-  // }
+  getUserDataById(uid:any){
+    return this.userCollection.doc<IUser>(uid).valueChanges()
+  }
 
   signout(){
     localStorage.clear()
     this.auth.signOut()
     this.router.navigate(['entry'])
   }
+
 }
