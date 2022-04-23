@@ -1,8 +1,9 @@
-<div fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-evenly center">
-  <div >
+<h3 class="error" [@errorAppeared] = "this.userService.error_message === undefined ? '*' : 'valami'" *ngIf="this.userService.error_message !== undefined">{{this.userService.error_message}}</h3>
+<div class="entry" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.gt-sm="space-evenly center">
+  <div class="entry">
     <app-register></app-register>
   </div>
-  <div>
+  <div class="entry">
     <app-signin></app-signin>
   </div>
 </div>

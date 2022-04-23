@@ -6,16 +6,27 @@ import {IComment} from "../../models/comment";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ArticleService} from "../../services/article.service";
+import { animate, style, trigger, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.scss']
+  styleUrls: ['./comments.component.scss'],
+  animations: [
+    trigger('onEnter', [
+      transition(':enter', [
+        style({opacity:0}),
+        animate('1s ease-in-out'),
+        style({opacity:1}),
+      ])
+    ])
+  ]
 })
 export class CommentsComponent implements OnInit {
 
   @Input() currentArticle : string | undefined;
   selectedArticle : string = ''
+  isCommentsOnDisplay : boolean = false
   comments : Observable<IComment[]> = empty()
   comment : FormGroup;
 
@@ -30,7 +41,7 @@ export class CommentsComponent implements OnInit {
 
   submitComment(documentName : string){
     let item : IComment = {
-      uid : this.userService.user.getValue().uid!,
+      displayName : this.userService.user.getValue().displayName!,
       content: this.comment.get('content')!.value
     }
     this.articleService.postComment(item, documentName)
@@ -46,6 +57,7 @@ export class CommentsComponent implements OnInit {
   }
 
   showComments(target: EventTarget) {
+    this.isCommentsOnDisplay = !this.isCommentsOnDisplay
     let name = (target as Element).id
     this.selectedArticle = name
     console.log(name)

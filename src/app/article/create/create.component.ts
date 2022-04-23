@@ -3,18 +3,48 @@ import { ArticleService } from '../../services/article.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IArticle} from "../../models/article";
 import {UserService} from "../../services/user.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition, keyframes,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-article-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
+  animations:[
+    trigger('popNameIntoField', [
+      state('filled', style({
+       opacity: 1
+      })),
+      transition(':enter, * => filled', [
+        style({opacity:0}),
+        animate('2s')
+      ])
+    ]),
+    trigger('openClose', [
+      //camel case for example backgroundColor
+      //style function convert to css
+      //state to call on transition
+      state('open', style({
+        opacity: 1,
+      })),
+      //multiple state transition( 'on => off, off => void' )
+      transition(':enter, * => open', [
+        style({opacity:0}),
+        animate('1s 100ms')
+      ])
+    ])
+  ]
 })
 export class CreateComponent implements OnInit {
   isCreatedFormVisible : boolean = false
   editMode : boolean = false
   articles : Observable<IArticle[]>
-  columnNumber = 1
   articleForm: FormGroup;
 
   constructor(public userService : UserService, private articleService: ArticleService) {
@@ -29,9 +59,13 @@ export class CreateComponent implements OnInit {
   }
 
   submitArticle(){
+      let img_field = this.articleForm.get('img_url')?.value
+      if(img_field === ""){
+        img_field = 'https://crossfitbbros.com/bbros-1/wp-content/uploads/2021/01/no-photo-available.png'
+      }
       let article : IArticle = {
-        uid: this.userService.user.getValue().uid,
-        img: this.articleForm.get('img_url')!.value,
+        displayName: this.userService.user.getValue().displayName,
+        img: img_field,
         name: this.articleForm.get('name')!.value,
         description: this.articleForm.get('description')!.value,
         content: this.articleForm.get('content')!.value,
@@ -50,11 +84,9 @@ export class CreateComponent implements OnInit {
 
   setCreationFormVisible(checked: boolean){
     if(checked){
-      this.columnNumber = 2
       this.isCreatedFormVisible = true
       return
     }
-    this.columnNumber = 1
     this.isCreatedFormVisible = false
   }
 

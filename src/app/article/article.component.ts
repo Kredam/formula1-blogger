@@ -1,12 +1,22 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import {IArticle} from "../models/article";
-import {Observable} from "rxjs";
+import {empty, Observable} from "rxjs";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.scss']
+  styleUrls: ['./article.component.scss'],
+  animations:[
+    trigger('onEnter', [
+      transition(':enter', [
+        style({opacity:0}),
+        animate('1s ease-in-out'),
+        style({opacity:1}),
+      ])
+    ]),
+  ]
 })
 export class ArticleComponent implements OnInit {
   @Input() userOnly : boolean = false
@@ -17,14 +27,10 @@ export class ArticleComponent implements OnInit {
     this.editArticleEvent.emit((eventTarget as Element).id);
   }
 
-  articles : Observable<IArticle[]>
+  articles : Observable<IArticle[]> = empty()
 
   constructor(private articleService: ArticleService) {
-    if(this.userOnly){
-      this.articles = this.articleService.retrieveUserArticles();
-    }else{
-      this.articles = this.articleService.retrieveAllArticles()
-    }
+
   }
   //a way you can access an observable value
   //2nd way is the above BehaviorSubject(has value observable no value)
@@ -38,6 +44,11 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.userOnly){
+      this.articles = this.articleService.retrieveUserArticles();
+    }else{
+      this.articles = this.articleService.retrieveAllArticles()
+    }
   }
 
 }

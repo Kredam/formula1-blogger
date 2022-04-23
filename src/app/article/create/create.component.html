@@ -2,12 +2,12 @@
                 class="button-alignment"
                 (change)="setCreationFormVisible($event.checked)"
 >Create New Article</mat-checkbox>
-<div fxLayout.gt-md="row" fxLayout="column" fxLayoutAlign.gt-md="center" fxLayoutAlign="center" >
-  <div fxFlex.gt-md="50" fxFlex="100" fxLayout.gt-md="column" *ngIf="isCreatedFormVisible" class="example-form-div">
-    <form [formGroup]="articleForm" (submit)="submitArticle()" >
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput type="text" name="name" id="name" formControlName="name" class="name">
+<div fxLayout.gt-md="row" fxLayout="column" fxLayoutAlign="center">
+  <div [@openClose]="this.isCreatedFormVisible ? 'open' : '*'" fxLayout.gt-md="column" fxFlex.gt-md="50" fxFlex="100" class="example-form-div" *ngIf="isCreatedFormVisible" >
+    <form  [formGroup]="articleForm" (submit)="submitArticle()">
+      <mat-form-field class="example-full-width" appearance="fill" [@popNameIntoField]="this.articleForm.get('name')?.disabled ? 'filled' : '*'">
+        <mat-label>Title</mat-label>
+        <input matInput type="text" name="name" id="name" formControlName="name" class="name" >
       </mat-form-field><br>
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Image Url</mat-label>
@@ -23,7 +23,7 @@
       </mat-form-field>
     <div>
       <button type="submit" mat-raised-button color="primary" [disabled]="!articleForm.valid">Post</button>
-      <button type="button" mat-raised-button color="warn" (click)="enableForm()">Clear</button>
+      <button type="button" mat-raised-button color="warn" (click)="enableForm()" >Clear</button>
     </div>
     </form>
   </div>

@@ -1,18 +1,23 @@
- <div *ngFor="let article of articles | async" class="cards"><br>
-    <mat-card>
-      <mat-card-title>{{article.name}}</mat-card-title>
-      <img mat-card-image [src]="article.img" />
-      <mat-card-subtitle>{{ article.description }}</mat-card-subtitle>
-      <mat-card-content id="mat_content" >{{ article.content }}</mat-card-content>
+ <div *ngFor="let article of articles | async" ><br>
+    <mat-card class="cards" [@onEnter]>
+      <mat-card-header>
+        <mat-card-title>{{article.name}}</mat-card-title>
+        <mat-card-subtitle>{{ article.description }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content id="mat_content" >
+        <img mat-card-image [src]="article.img" />
+        <p>{{ article.content }}</p>
+      </mat-card-content>
       <mat-divider></mat-divider>
+      <mat-card-footer>
+        Written by: {{article.displayName}}
+      </mat-card-footer>
       <mat-card-actions *ngIf="userOnly">
         <mat-icon [id]="article.name" class="icon-delete" (click)="deleteArticle!($event.target!)">delete</mat-icon>
         <mat-icon [id]="article.name" class="icon-edit" (click)="callEditArticle($event.target!)">edit</mat-icon>
       </mat-card-actions>
     </mat-card>
-   <div>
     <app-comments [currentArticle]="article.name"></app-comments>
-   </div>
 </div>
 
 
