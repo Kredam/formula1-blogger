@@ -13,6 +13,7 @@ import firebase from "firebase/compat";
 })
 export class UserService {
   user: BehaviorSubject<IUser>
+  error_message : string | undefined
 
   private readonly userCollection: AngularFirestoreCollection<IUser>;
 
@@ -46,15 +47,17 @@ export class UserService {
         email: UserCred.user?.email!,
         emailVerified: UserCred.user?.emailVerified
       })
+      this.error_message = undefined
+    }).catch((error) => {
+      this.error_message = error.message
     })
   }
 
 
   signin(userData?: IUser) {
-    if(!localStorage.getItem("uid")){
-      this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!)
-      this.router.navigate([''])
-    }
+    this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!).catch(error => {
+      this.error_message = error.message
+    })
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         const userSubj: IUser = {
@@ -66,6 +69,7 @@ export class UserService {
         localStorage.setItem("uid", user.uid)
         this.userRef = this.userCollection.doc(user.uid)
         this.user.next(userSubj)
+        this.error_message = undefined
         this.router.navigate([''])
       }else{
         this.user.next({
