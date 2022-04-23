@@ -1,6 +1,6 @@
 import { IUser } from "./user";
 
 export interface IComment{
-  uid: string,
+  displayName: string,
   content: string
 }

@@ -1,7 +1,7 @@
 import { IComment } from "./comment";
 
 export interface IArticle{
-  uid?: string,
+  displayName?: string,
   img?: string,
   name: string,
   description: string,
