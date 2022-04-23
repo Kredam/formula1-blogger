@@ -18,7 +18,7 @@ export class ArticleService {
 
   constructor(private _store: AngularFirestore, private userService: UserService, private router: Router) {
     this.article = new BehaviorSubject<IArticle>({
-      uid: this.userService.user.getValue().uid,
+      displayName: this.userService.user.getValue().displayName,
       name: '',
       description: '',
       content: '',
@@ -26,18 +26,18 @@ export class ArticleService {
   }
 
   retrieveUserArticles() : Observable<IArticle[]>{
-   return this._store.collection<IArticle>("Articles", items => items.where('uid', '==', localStorage.getItem('uid'))).valueChanges()
+   return this._store.collection<IArticle>("Articles", items => items.where('displayName', '==', this.userService.user.getValue()?.displayName)).valueChanges()
   }
 
   deleteArticle(articleName : string) : void{
-    this._store.collection<IArticle>("Articles", item => item.where('uid', '==', localStorage.getItem('uid'))).doc(articleName).delete()
+    this._store.collection<IArticle>("Articles", item => item.where('displayName', '==', this.userService.user.getValue()?.displayName)).doc(articleName).delete()
   }
 
   postArticle(articleData : IArticle) : void {
     console.log(articleData)
     this._store.collection('Articles').doc(articleData.name).set({
       name: articleData.name,
-      uid: articleData.uid!,
+      displayName: articleData.displayName!,
       img: articleData.img!,
       description: articleData.description,
       content: articleData.content
