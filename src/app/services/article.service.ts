@@ -50,7 +50,6 @@ export class ArticleService {
 
   retrieveComments(articleName : string) : Observable<IComment[]> {
     return this._store.collection("Articles").doc(articleName).collection<IComment>("Comments").valueChanges()
-
   }
   retrieveAllArticles() : Observable<IArticle[]>{
       return this._store.collection<IArticle>('Articles').valueChanges()

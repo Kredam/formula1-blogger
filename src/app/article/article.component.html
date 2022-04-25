@@ -1,16 +1,16 @@
- <div *ngFor="let article of articles | async" ><br>
+ <div *ngFor="let article of articles | async"  class="comment-glass"><br>
     <mat-card class="cards" [@onEnter]>
-      <mat-card-header>
+      <mat-card-header [ngStyle]="{'padding-bottom' : '14px'}">
         <mat-card-title>{{article.name}}</mat-card-title>
-        <mat-card-subtitle>{{ article.description }}</mat-card-subtitle>
+        <mat-card-subtitle [ngStyle]="{'color':'white'}">{{ article.description }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content id="mat_content" >
         <img mat-card-image [src]="article.img" />
         <p>{{ article.content }}</p>
+        <mat-divider></mat-divider>
       </mat-card-content>
-      <mat-divider></mat-divider>
-      <mat-card-footer>
-        Written by: {{article.displayName}}
+      <mat-card-footer class="card-footer">
+        <p>Written by: {{article.displayName}}</p>
       </mat-card-footer>
       <mat-card-actions *ngIf="userOnly">
         <mat-icon [id]="article.name" class="icon-delete" (click)="deleteArticle!($event.target!)">delete</mat-icon>

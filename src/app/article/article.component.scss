@@ -1,6 +1,18 @@
 .cards{
   max-width: 700px !important;
+  color: white;
+  background: rgba( 255, 255, 255, 0.1 );
+  box-shadow: 0 6px 32px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur( 17px );
+  -webkit-backdrop-filter: blur( 17px );
+  border-radius: 10px;
 }
+
+.card-footer{
+  text-align: center;
+  padding-top: 7px;
+}
+
 
 .button-alignment{
   margin-top: 50px;

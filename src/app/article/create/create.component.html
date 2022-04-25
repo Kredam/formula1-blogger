@@ -1,7 +1,9 @@
-  <mat-checkbox [checked]="isCreatedFormVisible"
-                class="button-alignment"
-                (change)="setCreationFormVisible($event.checked)"
->Create New Article</mat-checkbox>
+<div class="button-alignment">
+  <mat-slide-toggle [checked]="isCreatedFormVisible"
+                  color="primary"
+                  (change)="setCreationFormVisible($event.checked)"
+  >Create New Article</mat-slide-toggle>
+</div>
 <div fxLayout.gt-md="row" fxLayout="column" fxLayoutAlign="center">
   <div [@openClose]="this.isCreatedFormVisible ? 'open' : '*'" fxLayout.gt-md="column" fxFlex.gt-md="50" fxFlex="100" class="example-form-div" *ngIf="isCreatedFormVisible" >
     <form  [formGroup]="articleForm" (submit)="submitArticle()">

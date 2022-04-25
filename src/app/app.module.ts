@@ -33,6 +33,7 @@ import {ProfileSheetComponent} from "./profile/profile.component";
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet'
 import {CreateComponent} from "./article/create/create.component";
 import { CommentsComponent } from './article/comments/comments.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
   declarations: [
@@ -46,33 +47,34 @@ import { CommentsComponent } from './article/comments/comments.component';
     ProfileSheetComponent,
     CommentsComponent
   ],
-  imports: [
-    BrowserModule,
-    MatBottomSheetModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatGridListModule,
-    AppRoutingModule,
-    FormsModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    AngularFirestoreModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
-    provideAuth(() => getAuth()),
-    MatInputModule,
-    MatIconModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatListModule,
-    FlexModule,
-    FlexLayoutModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        MatBottomSheetModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatGridListModule,
+        AppRoutingModule,
+        FormsModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        AngularFirestoreModule,
+        ReactiveFormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth()),
+        MatInputModule,
+        MatIconModule,
+        MatRadioModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatListModule,
+        FlexModule,
+        FlexLayoutModule,
+        MatTooltipModule,
+        MatSlideToggleModule
+    ],
   providers: [
     ScreenTrackingService,UserTrackingService
   ],

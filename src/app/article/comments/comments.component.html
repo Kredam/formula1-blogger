@@ -1,4 +1,11 @@
 <div fxLayoutAlign="center center" fxLayout="column">
+  <div *ngIf="selectedArticle == currentArticle && this.isCommentsOnDisplay" class="example-full-width" [@onEnter]>
+    <mat-list *ngFor="let comment of  comments| async"  >
+      <mat-list-item class="list-item">Written by: {{comment.displayName}}</mat-list-item>
+      <mat-list-item class="list-item">{{comment.content}}</mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
   <form [formGroup]="this.comment">
     <mat-form-field >
       <mat-label>Comment</mat-label>
@@ -8,12 +15,5 @@
   <div>
     <button mat-raised-button color="primary" type="submit" [id]="currentArticle" [disabled]="!this.comment.valid" name="comment" (click)="obtainArticleName($event.currentTarget!)">Post</button>
     <button mat-raised-button color="accent" type="button" [id]="currentArticle" (click)="showComments($event.currentTarget!)">{{!isCommentsOnDisplay ? "Show " : "Hide "}}Comments</button>
-  </div>
-  <div *ngIf="selectedArticle == currentArticle && this.isCommentsOnDisplay" class="example-full-width">
-    <mat-list *ngFor="let comment of  comments| async"  [@onEnter]>
-      <mat-list-item>Written by: {{comment.displayName}}</mat-list-item>
-      <mat-list-item>{{comment.content}}</mat-list-item>
-      <mat-divider></mat-divider>
-    </mat-list>
   </div>
 </div>
