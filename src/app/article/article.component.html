@@ -1,23 +1,23 @@
- <div *ngFor="let article of articles | async"  class="comment-glass"><br>
+ <div *ngFor="let article of articles"  class="comment-glass"><br>
     <mat-card class="cards" [@onEnter]>
       <mat-card-header [ngStyle]="{'padding-bottom' : '14px'}">
-        <mat-card-title>{{article.name}}</mat-card-title>
-        <mat-card-subtitle [ngStyle]="{'color':'white'}">{{ article.description }}</mat-card-subtitle>
+        <mat-card-title>{{article.data.name}}</mat-card-title>
+        <mat-card-subtitle [ngStyle]="{'color':'white'}">{{ article.data.description }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content id="mat_content" >
-        <img mat-card-image [src]="article.img" />
-        <p>{{ article.content }}</p>
+        <img mat-card-image [src]="article.data.img" />
+        <p>{{ article.data.content }}</p>
         <mat-divider></mat-divider>
       </mat-card-content>
       <mat-card-footer class="card-footer">
-        <p>Written by: {{article.displayName}}</p>
+        <p *ngIf="article.user | async as userData ">Written by: {{userData.displayName}}</p>
       </mat-card-footer>
       <mat-card-actions *ngIf="userOnly">
-        <mat-icon [id]="article.name" class="icon-delete" (click)="deleteArticle!($event.target!)">delete</mat-icon>
-        <mat-icon [id]="article.name" class="icon-edit" (click)="callEditArticle($event.target!)">edit</mat-icon>
+        <mat-icon [id]="article.data.name" class="icon-delete" (click)="deleteArticle!($event.target!)">delete</mat-icon>
+        <mat-icon [id]="article.data.name" class="icon-edit" (click)="callEditArticle($event.target!)">edit</mat-icon>
       </mat-card-actions>
     </mat-card>
-    <app-comments [currentArticle]="article.name"></app-comments>
+    <app-comments [currentArticle]="article.data.name"></app-comments>
 </div>
 
 

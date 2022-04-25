@@ -26,11 +26,12 @@ export class CommentsComponent implements OnInit {
 
   @Input() currentArticle : string | undefined;
   selectedArticle : string = ''
-  isCommentsOnDisplay : boolean = false
-  comments : Observable<IComment[]> = empty()
+  isCommentsOnDisplay : boolean;
+  comments : Array<{data:IComment, user:Observable<IUser | undefined>}> = []
   comment : FormGroup;
 
   constructor(public userService:UserService, public articleService : ArticleService) {
+    this.isCommentsOnDisplay = false
     this.comment = new FormGroup({
       content: new FormControl('', Validators.required)
     })
@@ -40,8 +41,9 @@ export class CommentsComponent implements OnInit {
   }
 
   submitComment(documentName : string){
+    this.isCommentsOnDisplay = false
     let item : IComment = {
-      displayName : this.userService.user.getValue().displayName!,
+      uid : this.userService.user.getValue().uid!,
       content: this.comment.get('content')!.value
     }
     this.articleService.postComment(item, documentName)
@@ -60,8 +62,15 @@ export class CommentsComponent implements OnInit {
     this.isCommentsOnDisplay = !this.isCommentsOnDisplay
     let name = (target as Element).id
     this.selectedArticle = name
-    console.log(name)
-    this.comments = this.articleService.retrieveComments(name)
+    this.articleService.retrieveComments(name).subscribe(event =>{
+      this.comments = []
+      for (let i = 0; i < event.length; i++) {
+        this.comments.push({data: event[i], user:this.userService.getUserDataById(event[i].uid!)})
+      }
+      setTimeout(() => {
+        this.isCommentsOnDisplay = true
+      }, 500)
+    })
 
   }
 }

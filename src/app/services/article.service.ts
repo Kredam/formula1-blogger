@@ -13,12 +13,11 @@ import {IComment} from "../models/comment";
 export class ArticleService {
 
   private article: BehaviorSubject<IArticle>
-
   public collRef : any;
 
   constructor(private _store: AngularFirestore, private userService: UserService, private router: Router) {
     this.article = new BehaviorSubject<IArticle>({
-      displayName: this.userService.user.getValue().displayName,
+      uid: this.userService.user.getValue().uid,
       name: '',
       description: '',
       content: '',
@@ -26,18 +25,18 @@ export class ArticleService {
   }
 
   retrieveUserArticles() : Observable<IArticle[]>{
-   return this._store.collection<IArticle>("Articles", items => items.where('displayName', '==', this.userService.user.getValue()?.displayName)).valueChanges()
+   return this._store.collection<IArticle>("Articles", items => items.where('uid', '==', this.userService.user.getValue()?.uid)).valueChanges()
   }
 
   deleteArticle(articleName : string) : void{
-    this._store.collection<IArticle>("Articles", item => item.where('displayName', '==', this.userService.user.getValue()?.displayName)).doc(articleName).delete()
+    this._store.collection<IArticle>("Articles", item => item.where('uid', '==', this.userService.user.getValue()?.uid)).doc(articleName).delete()
   }
 
   postArticle(articleData : IArticle) : void {
     console.log(articleData)
     this._store.collection('Articles').doc(articleData.name).set({
       name: articleData.name,
-      displayName: articleData.displayName!,
+      uid: articleData.uid!,
       img: articleData.img!,
       description: articleData.description,
       content: articleData.content

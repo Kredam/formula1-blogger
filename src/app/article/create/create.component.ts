@@ -64,7 +64,7 @@ export class CreateComponent implements OnInit {
         img_field = 'https://crossfitbbros.com/bbros-1/wp-content/uploads/2021/01/no-photo-available.png'
       }
       let article : IArticle = {
-        displayName: this.userService.user.getValue().displayName,
+        uid: this.userService.user.getValue().uid,
         img: img_field,
         name: this.articleForm.get('name')!.value,
         description: this.articleForm.get('description')!.value,

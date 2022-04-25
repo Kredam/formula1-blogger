@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom } from "rxjs";
 import { IUser } from "../models/user";
 import { updateProfile } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+} from "@angular/fire/compat/firestore";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from '@angular/router';
 
@@ -24,6 +28,7 @@ export class UserService {
       email: "",
       emailVerified: undefined
     })
+    this.signin()
   }
 
   get getUserCollection(){
@@ -48,11 +53,12 @@ export class UserService {
     })
   }
 
-
   signin(userData?: IUser) {
-    this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!).catch(error => {
-      this.error_message = error.message
-    })
+    if(localStorage.getItem("uid")){
+      this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!).catch(error => {
+        this.error_message = error.message
+      })
+    }
     this.auth.onAuthStateChanged((user) => {
       if (user) {
         const userSubj: IUser = {

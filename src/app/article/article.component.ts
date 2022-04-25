@@ -1,8 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import {IArticle} from "../models/article";
-import {empty, Observable} from "rxjs";
+import {empty, map, Observable} from "rxjs";
 import { animate, style, transition, trigger } from '@angular/animations';
+import {UserService} from "../services/user.service";
+import {IUser} from "../models/user";
 
 @Component({
   selector: 'app-article',
@@ -23,31 +25,31 @@ export class ArticleComponent implements OnInit {
   @Input() deleteArticle : Function | undefined;
   @Output() editArticleEvent : EventEmitter<any> = new EventEmitter<any>()
 
+  articles : Array<{data:IArticle, user:Observable<IUser | undefined>}> = []
+
   callEditArticle(eventTarget: EventTarget){
     this.editArticleEvent.emit((eventTarget as Element).id);
   }
 
-  articles : Observable<IArticle[]> = empty()
+  constructor(private articleService: ArticleService, private userService: UserService) {}
 
-  constructor(private articleService: ArticleService) {
 
-  }
-  //a way you can access an observable value
-  //2nd way is the above BehaviorSubject(has value observable no value)
-  async testObservable(){
-    let event2 : string
-    this.articleService.retrieveUserArticles().subscribe(event => {
-      for (let i = 0; i < event.length; i++) {
-        console.log(event[i].content)
-      }
-    })
-  }
 
   ngOnInit(): void {
     if(this.userOnly){
-      this.articles = this.articleService.retrieveUserArticles();
+      this.articleService.retrieveUserArticles().subscribe(event =>{
+        this.articles = []
+        for (let i = 0; i < event.length; i++) {
+          this.articles.push({data: event[i], user:this.userService.getUserDataById(event[i].uid!)})
+        }
+      })
     }else{
-      this.articles = this.articleService.retrieveAllArticles()
+      this.articleService.retrieveAllArticles().subscribe(event =>{
+        this.articles = []
+        for (let i = 0; i < event.length; i++) {
+          this.articles.push({data: event[i], user:this.userService.getUserDataById(event[i].uid!)})
+        }
+      })
     }
   }
 
