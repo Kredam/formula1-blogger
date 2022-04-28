@@ -47,6 +47,9 @@ export class CommentsComponent implements OnInit {
       content: this.comment.get('content')!.value
     }
     this.articleService.postComment(item, documentName)
+    setTimeout(() => {
+      this.isCommentsOnDisplay = true
+    }, 500)
   }
 
   getName(uid: string){
@@ -67,9 +70,6 @@ export class CommentsComponent implements OnInit {
       for (let i = 0; i < event.length; i++) {
         this.comments.push({data: event[i], user:this.userService.getUserDataById(event[i].uid!)})
       }
-      setTimeout(() => {
-        this.isCommentsOnDisplay = true
-      }, 500)
     })
 
   }

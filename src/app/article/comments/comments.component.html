@@ -6,14 +6,14 @@
       <mat-divider></mat-divider>
     </mat-list>
   </div>
-  <form [formGroup]="this.comment">
+  <form [formGroup]="this.comment" *ngIf="userService.user.getValue().uid !== ''">
     <mat-form-field >
       <mat-label>Comment</mat-label>
       <textarea matInput type="text" formControlName="content"></textarea>
     </mat-form-field>
   </form>
   <div>
-    <button mat-raised-button color="primary" type="submit" [id]="currentArticle" [disabled]="!this.comment.valid" name="comment" (click)="obtainArticleName($event.currentTarget!)">Post</button>
+    <button mat-raised-button color="primary" type="submit" *ngIf="userService.user.getValue().uid !== ''" [id]="currentArticle" [disabled]="!this.comment.valid" name="comment" (click)="obtainArticleName($event.currentTarget!)">Post</button>
     <button mat-raised-button color="accent" type="button" [id]="currentArticle" (click)="showComments($event.currentTarget!)">{{!isCommentsOnDisplay ? "Show " : "Hide "}}Comments</button>
   </div>
 </div>

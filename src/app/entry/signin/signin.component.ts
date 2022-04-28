@@ -22,13 +22,12 @@ export class SigninComponent implements OnInit {
   }
 
 
-  sendTestData(){
+  signIn(){
     const item: IUser = {
       password: this.userForm.get("password")!.value,
       email: this.userForm.get("email")!.value
     }
     this.userService.signin(item)
-    return 0
   }
 
 }

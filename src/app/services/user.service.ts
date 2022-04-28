@@ -54,7 +54,7 @@ export class UserService {
   }
 
   signin(userData?: IUser) {
-    if(localStorage.getItem("uid")){
+    if(!localStorage.getItem("uid")){
       this.auth.signInWithEmailAndPassword(userData?.email!, userData?.password!).catch(error => {
         this.error_message = error.message
       })
