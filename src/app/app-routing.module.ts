@@ -5,7 +5,7 @@ import {EntryComponent} from "./entry/entry.component";
 import {AuthGuard} from "./guards/auth.guard";
 import { ArticleComponent } from './article/article.component';
 import {SignGuard} from "./guards/sign.guard";
-  import {CreateComponent} from "./article/create/create.component";
+import {CreateComponent} from "./article/create/create.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},

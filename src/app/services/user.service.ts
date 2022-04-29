@@ -84,7 +84,7 @@ export class UserService {
   }
 
   getUserDataById(uid:string){
-    return this.userCollection.doc<IUser>(uid).valueChanges();
+    return this.userCollection.doc<IUser>(uid).valueChanges()
   }
 
   signout(){

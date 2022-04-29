@@ -46,6 +46,7 @@ export class CreateComponent implements OnInit {
   editMode : boolean = false
   articles : Observable<IArticle[]>
   articleForm: FormGroup;
+  selectedArticleId: string | undefined;
 
   constructor(public userService : UserService, private articleService: ArticleService) {
     this.articleForm = new FormGroup({
@@ -59,22 +60,26 @@ export class CreateComponent implements OnInit {
   }
 
   submitArticle(){
+      console.log(this.selectedArticleId)
       let img_field = this.articleForm.get('img_url')?.value
       if(img_field === ""){
         img_field = 'https://crossfitbbros.com/bbros-1/wp-content/uploads/2021/01/no-photo-available.png'
       }
       let article : IArticle = {
+        id: this.selectedArticleId,
         uid: this.userService.user.getValue().uid,
         img: img_field,
         name: this.articleForm.get('name')!.value,
         description: this.articleForm.get('description')!.value,
         content: this.articleForm.get('content')!.value,
       }
+      this.selectedArticleId = undefined;
       this.articleService.postArticle(article)
       this.enableForm()
   }
 
   enableForm(){
+    this.selectedArticleId = undefined
     this.articleForm.get('name')?.setValue('')
     this.articleForm.get('img_url')?.setValue('')
     this.articleForm.get('description')?.setValue('')
@@ -90,18 +95,6 @@ export class CreateComponent implements OnInit {
     this.isCreatedFormVisible = false
   }
 
-
-  //a way you can access an observable value
-  //2nd way is the above BehaviorSubject(has value observable no value)
-  // async testObservable(){
-  //   let event2 : string
-  //   this.articleService.retrieveUserArticles().subscribe(event => {
-  //     for (let i = 0; i < event.length; i++) {
-  //       console.log(event[i].content)
-  //     }
-  //   })
-  // }
-
   deleteArticle(eventTarget: EventTarget) {
     let elementId : string = (eventTarget as Element).id
     this.articleService.deleteArticle(elementId)
@@ -110,11 +103,17 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  editArticle(value: string) {
-    //for form control you need to use this to disable field
-    this.articleForm.get('name')?.disable()
-    console.log(this.articleForm?.value)
-    this.articleForm.get('name')?.setValue(value)
+  fillForm(value: string) {
+    this.selectedArticleId = value
+    const title = document.getElementById(value)?.getElementsByClassName("mat-card-title")[0].textContent
+    const description = document.getElementById(value)?.getElementsByClassName("mat-card-subtitle")[0].textContent
+    const img_url = document.getElementById(value)?.querySelector("img")?.getAttribute("src")?.valueOf()
+    const content = document.getElementById(value)?.querySelector("p")?.textContent
+    console.log(title, description, img_url, content)
+    this.articleForm.get('name')?.setValue(title)
+    this.articleForm.get('img_url')?.setValue(img_url)
+    this.articleForm.get('description')?.setValue(description)
+    this.articleForm.get('content')?.setValue(content)
   }
 
 }

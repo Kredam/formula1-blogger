@@ -7,7 +7,7 @@
 <div fxLayout.gt-md="row" fxLayout="column" fxLayoutAlign="center">
   <div [@openClose]="this.isCreatedFormVisible ? 'open' : '*'" fxLayout.gt-md="column" fxFlex.gt-md="50" fxFlex="100" class="example-form-div" *ngIf="isCreatedFormVisible" >
     <form  [formGroup]="articleForm" (submit)="submitArticle()">
-      <mat-form-field class="example-full-width" appearance="fill" [@popNameIntoField]="this.articleForm.get('name')?.disabled ? 'filled' : '*'">
+      <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Title</mat-label>
         <input matInput type="text" name="name" id="name" formControlName="name" class="name" >
       </mat-form-field><br>
@@ -24,10 +24,10 @@
         <textarea matInput type="text" name="content" id="content" formControlName="content" class="content"></textarea>
       </mat-form-field>
     <div>
-      <button type="submit" mat-raised-button color="primary" [disabled]="!articleForm.valid">Post</button>
-      <button type="button" mat-raised-button color="warn" (click)="enableForm()" >Clear</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!articleForm.valid">{{this.selectedArticleId === undefined ? "Create" : "Update"}}</button>
+      <button  type="button" mat-raised-button color="warn" (click)="enableForm()" >Clear</button>
     </div>
     </form>
   </div>
-    <app-article [userOnly]="true" [deleteArticle]="deleteArticle" (editArticleEvent)="editArticle($event)"></app-article>
+    <app-article [userOnly]="true" [deleteArticle]="deleteArticle" (editArticleEvent)="fillForm($event)"></app-article>
 </div>

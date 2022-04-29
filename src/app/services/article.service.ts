@@ -17,6 +17,7 @@ export class ArticleService {
 
   constructor(private _store: AngularFirestore, private userService: UserService, private router: Router) {
     this.article = new BehaviorSubject<IArticle>({
+      id: undefined,
       uid: this.userService.user.getValue().uid,
       name: '',
       description: '',
@@ -32,15 +33,31 @@ export class ArticleService {
     this._store.collection<IArticle>("Articles", item => item.where('uid', '==', this.userService.user.getValue()?.uid)).doc(articleName).delete()
   }
 
-  postArticle(articleData : IArticle) : void {
-    console.log(articleData)
-    this._store.collection('Articles').doc(articleData.name).set({
+  editArtcile(articleData : IArticle){
+    this._store.collection('Articles').doc(articleData.id).update({
+      id: articleData.id,
       name: articleData.name,
       uid: articleData.uid!,
       img: articleData.img!,
       description: articleData.description,
       content: articleData.content
     })
+  }
+
+  postArticle(articleData : IArticle) : void {
+    if(articleData.id !== undefined){
+      this.editArtcile(articleData)
+    }else{
+      let id = this._store.createId()
+      this._store.collection('Articles').doc(id).set({
+        id: id,
+        name: articleData.name,
+        uid: articleData.uid!,
+        img: articleData.img!,
+        description: articleData.description,
+        content: articleData.content
+      })
+    }
   }
 
   postComment(comment : IComment, docName: string){

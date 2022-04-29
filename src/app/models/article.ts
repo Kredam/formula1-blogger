@@ -3,7 +3,7 @@ import {IUser} from "./user";
 import {Observable} from "rxjs";
 
 export interface IArticle{
-  // displayName?: string,
+  id?: string | undefined,
   uid?: string,
   img?: string,
   name: string,
