@@ -17,7 +17,7 @@
         <mat-icon [id]="article.data.id" [ngStyle]="{ 'cursor' : 'pointer;'}" class="icon-edit" (click)="callEditArticle($event.target!)">edit</mat-icon>
       </mat-card-actions>
     </mat-card>
-    <app-comments [currentArticle]="article.data.name"></app-comments>
+    <app-comments [currentArticle]="article.data.id"></app-comments>
 </div>
 
 
