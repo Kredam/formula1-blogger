@@ -19,7 +19,7 @@ export class ArticleService {
     this.article = new BehaviorSubject<IArticle>({
       id: undefined,
       uid: this.userService.user.getValue().uid,
-      name: '',
+      title: '',
       description: '',
       content: '',
     })
@@ -36,7 +36,7 @@ export class ArticleService {
   editArtcile(articleData : IArticle){
     this._store.collection('Articles').doc(articleData.id).update({
       id: articleData.id,
-      name: articleData.name,
+      title: articleData.title,
       uid: articleData.uid!,
       img: articleData.img!,
       description: articleData.description,
@@ -52,7 +52,7 @@ export class ArticleService {
       let id = this._store.createId()
       this._store.collection('Articles').doc(id).set({
         id: id,
-        name: articleData.name,
+        title: articleData.title,
         uid: articleData.uid!,
         img: articleData.img!,
         description: articleData.description,

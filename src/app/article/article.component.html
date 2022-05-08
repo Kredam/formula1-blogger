@@ -1,12 +1,12 @@
  <div *ngFor="let article of articles"  class="comment-glass"><br>
     <mat-card class="cards" [@onEnter] [id]="article.data.id">
       <mat-card-header [ngStyle]="{'padding-bottom' : '14px'}">
-        <mat-card-title >{{article.data.name}}</mat-card-title>
+        <mat-card-title >{{article.data.title}}</mat-card-title>
         <mat-card-subtitle [ngStyle]="{'color':'white'}">{{ article.data.description }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content id="mat_content" >
         <img mat-card-image [src]="article.data.img" />
-        <p>{{ article.data.content }}</p>
+        <p class="content">{{ article.data.content }}</p>
         <mat-divider></mat-divider>
       </mat-card-content>
       <mat-card-footer class="card-footer">

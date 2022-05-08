@@ -6,7 +6,7 @@ export interface IArticle{
   id?: string | undefined,
   uid?: string,
   img?: string,
-  name: string,
+  title: string,
   description: string,
   content: string,
   comments?: IComment[]

@@ -69,7 +69,7 @@ export class CreateComponent implements OnInit {
         id: this.selectedArticleId,
         uid: this.userService.user.getValue().uid,
         img: img_field,
-        name: this.articleForm.get('name')!.value,
+        title: this.articleForm.get('name')!.value,
         description: this.articleForm.get('description')!.value,
         content: this.articleForm.get('content')!.value,
       }
